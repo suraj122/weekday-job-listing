@@ -24,7 +24,7 @@ export const fetchJobListings = createAsyncThunk(
         requestOptions
       );
       const data = await response.json();
-      return data;
+      return data.jdList;
     } catch (error) {
       console.error(error);
     }
@@ -47,7 +47,7 @@ const jobListingSlice = createSlice({
       })
       .addCase(fetchJobListings.fulfilled, (state, action) => {
         state.loading = false;
-        state.data = state.data.concat(action.payload);
+        state.data = action.payload;
       })
       .addCase(fetchJobListings.rejected, (state, action) => {
         state.loading = false;
