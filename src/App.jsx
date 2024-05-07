@@ -1,11 +1,9 @@
-import { Typography } from "@mui/material";
+import FilterBar from "./components/FilterBar";
 
 function App() {
   return (
     <>
-      <Typography variant="h3" component="h1" align="center">
-        Hello Weekday!
-      </Typography>
+      <FilterBar />
     </>
   );
 }
