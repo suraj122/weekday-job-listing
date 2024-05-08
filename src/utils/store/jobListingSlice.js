@@ -3,21 +3,26 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 const myHeaders = new Headers();
 myHeaders.append("Content-Type", "application/json");
 
-const body = JSON.stringify({
+const initialBody = JSON.stringify({
   limit: 10,
   offset: 0,
 });
 
-const requestOptions = {
+const initialRequestOptions = {
   method: "POST",
   headers: myHeaders,
-  body,
+  body: initialBody,
 };
 
 export const fetchJobListings = createAsyncThunk(
   "jobListings/fetchJobListings",
 
-  async () => {
+  async ({ limit, offset }) => {
+    const requestOptions = {
+      ...initialRequestOptions,
+      body: JSON.stringify({ limit, offset }),
+    };
+
     try {
       const response = await fetch(
         "https://api.weekday.technology/adhoc/getSampleJdJSON",
@@ -27,6 +32,7 @@ export const fetchJobListings = createAsyncThunk(
       return data.jdList;
     } catch (error) {
       console.error(error);
+      throw error;
     }
   }
 );
@@ -37,6 +43,7 @@ const jobListingSlice = createSlice({
     data: [],
     loading: false,
     error: null,
+    hasMore: true,
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -47,7 +54,8 @@ const jobListingSlice = createSlice({
       })
       .addCase(fetchJobListings.fulfilled, (state, action) => {
         state.loading = false;
-        state.data = action.payload;
+        state.data = [...state.data, ...action.payload];
+        state.hasMore = action.payload.length > 0;
       })
       .addCase(fetchJobListings.rejected, (state, action) => {
         state.loading = false;

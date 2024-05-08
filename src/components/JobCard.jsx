@@ -7,6 +7,7 @@ import {
   CardContent,
   Chip,
   Grid,
+  Link,
   Typography,
 } from "@mui/material";
 
@@ -21,6 +22,7 @@ const JobCard = ({ job }) => {
     maxJdSalary,
     jobDetailsFromCompany,
     minExp,
+    jdLink,
   } = job;
   return (
     <Grid item xs={12} md={6} lg={4}>
@@ -29,6 +31,7 @@ const JobCard = ({ job }) => {
           p: 2,
           height: "100%",
           transition: "transform 200ms ease-in",
+          borderRadius: "24px",
           ":hover": {
             transform: " scale(1.02)",
           },
@@ -129,9 +132,16 @@ const JobCard = ({ job }) => {
                 cursor: "pointer",
               }}
             >
-              <Typography component="p" sx={{ color: "blue" }}>
-                View
-              </Typography>
+              <Link
+                href={jdLink}
+                underline="none"
+                target="_blank"
+                rel="noopener"
+              >
+                <Typography component="p" sx={{ color: "blue" }}>
+                  View
+                </Typography>
+              </Link>
             </Box>
           </Box>
           <Box>
