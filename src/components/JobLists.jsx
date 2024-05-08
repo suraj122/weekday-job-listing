@@ -12,8 +12,8 @@ const JobLists = () => {
   ) : (
     <Box component="main" sx={{ mt: 8 }}>
       <Box component="section">
-        <Container maxWidth="xl" sx={{ px: "32px" }}>
-          <Grid container spacing={4}>
+        <Container maxWidth="xl">
+          <Grid container spacing={6} sx={{ px: 10 }}>
             {data.map((job) => (
               <JobCard key={job.jdUid} job={job} />
             ))}
